@@ -39,7 +39,8 @@ while u > 1:
          
     for loter in list2.keys():
         print(str(loter) + ") " + list2[loter])
-     print("Press \"e\" to exit this")
+
+    print(str("Press \"e\" to exit this"))
     val = raw_input("Enter the index number : ")
     if (val == "e"):
         u = 0
