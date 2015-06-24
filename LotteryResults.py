@@ -46,30 +46,44 @@ while u > 1:
         u = 0
     else:
         print("Enter the lottery draw number")
-        ida = raw_input("Enter the id : ")
-        ul = list1[list2[val]]
+        ida = raw_input("Enter the number : ")
+        no_req = 0
+        try:
+            ul = list1[list2[val]]
+        except:
+            print("Please Enter a valid ID")
+            no_req = 1
         val1 = ul.replace("http://www.nlb.lk/results-more.php?id=", "")
         if "nlb.lk" in ul:
-            ul1="http://www.nlb.lk/" + "show-results.php?dno=" + ida + "&lott=" + val1
-            data4 = urllib2.urlopen(ul1)
-            soup4 = BeautifulSoup(data4)
-            data_set = soup4.find("strong", {"class" : "bodyText-black"})
-            number1 = soup4.find("table", {"class" : "lottery-numbers"}).find_all("td")
-            print(str(data_set.text).replace(" ", ""))
-            for a in number1:
-                lista.append((str(a.text).replace(" ", "")))
-            print("Winning Numbers are : " + str(lista).replace("n", "").replace("'", "").replace("[", "").replace("]", "").replace(",", "").replace("t", "").replace("\\", ""))
+            try:
+                ul1="http://www.nlb.lk/" + "show-results.php?dno=" + ida + "&lott=" + val1
+                data4 = urllib2.urlopen(ul1)
+                soup4 = BeautifulSoup(data4)
+                data_set = soup4.find("strong", {"class" : "bodyText-black"})
+                number1 = soup4.find("table", {"class" : "lottery-numbers"}).find_all("td")
+                date = str(data_set.text).replace(" ", "")
+                print(date)
+                for a in number1:
+                    lista.append((str(a.text).replace(" ", "")))
+                print("Winning Numbers are : " + str(lista).replace("n", "").replace("'", "").replace("[", "").replace("]", "").replace(",", "").replace("t", "").replace("\\", ""))
+            except: 
+                print("Not Found on NLB")
         else:
-            data_set2 = urllib2.urlopen(ul)
-            soup5 = BeautifulSoup(data_set2)
-             
-            number2 = soup5.find_all("tr", {"class" : "alt"})
-            for l in number2:
-                res = ("\n"+str((l.text)).replace("\n", "")).encode('utf-8').replace(u'┬á', "")
-        #         print(res)
-                if str(ida) in res:
-                    print(res)
-        raw_input("")
+            if not no_req == 1:
+                nowr = ""
+                data_set2 = urllib2.urlopen(ul)
+                soup5 = BeautifulSoup(data_set2)
+                     
+                number2 = soup5.find_all("tr", {"class" : "alt"})
+                for l in number2:
+                    res = ("\n"+str((l.text)).replace("\n", "")).encode('utf-8').replace(u'┬á', "")
+                #         print(res)
+                    if str(ida) in res:
+                        nowr = res
+                        print(nowr)
+                if nowr == "":
+                    print("Not Found on DLB")
+        raw_input("\n Press Enter to Continue")
 # data3 = urllib2.urlopen(ul)
 # soup3 = BeautifulSoup(data3)
 
